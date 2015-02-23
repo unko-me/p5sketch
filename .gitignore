@@ -1,0 +1,16 @@
+.DS_Store
+applet
+application.linux
+application.macosx
+application.windows
+*.zip
+
+*.class
+build-tmp/
+
+
+
+# sublime
+
+/*.sublime-project
+/*.sublime-workspace
