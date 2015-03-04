@@ -11,6 +11,7 @@ int HEIGHT = 640;
 void setup () {
 	size(WIDTH, HEIGHT);
 	smooth();
+	frameRate(30);
 	background(0x999999);
 }
 void draw() {
