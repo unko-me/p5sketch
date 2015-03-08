@@ -2,7 +2,7 @@ int WIDTH  = 640;
 int HEIGHT = 640;
 
 Segment[] _segmentList;
-int NUM_SEGMENTS = 30;
+int NUM_SEGMENTS = 60;
 float colorValue = 0.0;
 boolean _mouseDown;
 
