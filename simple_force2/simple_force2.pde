@@ -2,7 +2,7 @@ int WIDTH  = 640;
 int HEIGHT = 640;
 
 Segment[] _segmentList;
-int NUM_SEGMENTS = 30;
+int NUM_SEGMENTS = 20;
 float colorValue = 0.0;
 boolean _mouseDown;
 
@@ -30,13 +30,24 @@ void _init()   {
 		seg = new Segment();
 		_segmentList[i] = seg;
 
-		seg.position.y = cos(i * pi) * radius + centerY;
+		seg.position.y = -cos(i * pi) * radius + centerY;
 		seg.position.x = sin(i * pi) * radius + centerX;
 		if (prevSeg != null) { 
 			// prevSeg.addSegment(seg);
 			seg.addSegment(prevSeg);
 		}
 		prevSeg = seg;
+	}
+
+	Segment seg2;
+	for (int i = 0; i < NUM_SEGMENTS; ++i) {
+		seg = _segmentList[i];
+		for (int j = i + 1; j < NUM_SEGMENTS; ++j) {
+			seg2 = _segmentList[j];
+			if (seg2 != null)
+				seg2.addSegment(seg);
+				// seg.addSegment(seg2);
+		}
 	}
 }
 // void _init()   {
@@ -114,12 +125,23 @@ void _updateSegments() {
  }
 
  void _drawLines() {
-	Segment prevSeg = null;
-	int i = 0;
- 	for (Segment seg : _segmentList) {
- 		if (prevSeg != null)
- 			line(prevSeg.position.x, prevSeg.position.y, seg.position.x, seg.position.y);
- 		prevSeg = seg;
- 		i++;
- 	}
+	// Segment prevSeg = null;
+	// int i = 0;
+ 	// for (Segment seg : _segmentList) {
+ 	// 	if (prevSeg != null)
+ 	// 		line(prevSeg.position.x, prevSeg.position.y, seg.position.x, seg.position.y);
+ 	// 	prevSeg = seg;
+ 	// 	i++;
+ 	// }
+
+ 	Segment seg1;
+ 	Segment seg2;
+	for (int i = 0; i < NUM_SEGMENTS; ++i) {
+		seg1 = _segmentList[i];
+		for (int j = i + 1; j < NUM_SEGMENTS; ++j) {
+			seg2 = _segmentList[j];
+			if (seg2 != null)
+				line(seg1.position.x, seg1.position.y, seg2.position.x, seg2.position.y);
+		}
+	}
  }
