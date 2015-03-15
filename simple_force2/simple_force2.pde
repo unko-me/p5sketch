@@ -21,14 +21,17 @@ void _init()   {
 	Segment seg;
 	float ww = 40;
 	float hh = 40;
+	float PI = 3.1415;
+	float pi = PI * 2 / NUM_SEGMENTS;
+	float centerX = width / 2;
+	float centerY = height / 2;
+	float radius = 200;
 	for (int i = 0; i < NUM_SEGMENTS; ++i) {
 		seg = new Segment();
 		_segmentList[i] = seg;
 
-		seg.position.y = floor(i / 4) * hh;
-		seg.position.x =      (i % 4) * ww;
-		// seg.position.x = random(-1.0f, 1.0f) * 200.0 + WIDTH / 2;
-		// seg.position.y = random(-1.0f, 1.0f) * 200.0 + HEIGHT / 2;
+		seg.position.y = cos(i * pi) * radius + centerY;
+		seg.position.x = sin(i * pi) * radius + centerX;
 		if (prevSeg != null) { 
 			// prevSeg.addSegment(seg);
 			seg.addSegment(prevSeg);
@@ -36,6 +39,27 @@ void _init()   {
 		prevSeg = seg;
 	}
 }
+// void _init()   {
+// 	_segmentList = new Segment[NUM_SEGMENTS];
+// 	Segment prevSeg = null;
+// 	Segment seg;
+// 	float ww = 40;
+// 	float hh = 40;
+// 	for (int i = 0; i < NUM_SEGMENTS; ++i) {
+// 		seg = new Segment();
+// 		_segmentList[i] = seg;
+
+// 		seg.position.y = floor(i / 4) * hh;
+// 		seg.position.x =      (i % 4) * ww;
+// 		// seg.position.x = random(-1.0f, 1.0f) * 200.0 + WIDTH / 2;
+// 		// seg.position.y = random(-1.0f, 1.0f) * 200.0 + HEIGHT / 2;
+// 		if (prevSeg != null) { 
+// 			// prevSeg.addSegment(seg);
+// 			seg.addSegment(prevSeg);
+// 		}
+// 		prevSeg = seg;
+// 	}
+// }
 
 void draw() {
 	fillBg();
