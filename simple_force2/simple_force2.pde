@@ -39,16 +39,16 @@ void _init()   {
 		prevSeg = seg;
 	}
 
-	Segment seg2;
-	for (int i = 0; i < NUM_SEGMENTS; ++i) {
-		seg = _segmentList[i];
-		for (int j = i + 1; j < NUM_SEGMENTS; ++j) {
-			seg2 = _segmentList[j];
-			if (seg2 != null)
-				seg2.addSegment(seg);
-				// seg.addSegment(seg2);
-		}
-	}
+	// Segment seg2;
+	// for (int i = 0; i < NUM_SEGMENTS; ++i) {
+	// 	seg = _segmentList[i];
+	// 	for (int j = i + 1; j < NUM_SEGMENTS; ++j) {
+	// 		seg2 = _segmentList[j];
+	// 		if (seg2 != null)
+	// 			seg2.addSegment(seg);
+	// 			// seg.addSegment(seg2);
+	// 	}
+	// }
 }
 // void _init()   {
 // 	_segmentList = new Segment[NUM_SEGMENTS];

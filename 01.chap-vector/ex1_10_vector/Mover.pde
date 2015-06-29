@@ -6,7 +6,7 @@ class Mover  {
 	PVector velocity;
 	PVector acceleration;
 	float topSpeed = 100;
-	float accelerationFriction = 0.1;
+	float accelerationFriction = 0.4;
 	float velocityFriction = 0.9;
 	float _baseRadius = 16;
 	int _color;
@@ -18,7 +18,7 @@ class Mover  {
 	PVector t = new PVector(0, 10000);
 
 	public Mover (float x, float y) {
-		location = new PVector(random(width), random(height));
+		location = new PVector(x, y);
 		// acceleration = new PVector(-0.1, 0.1);
 		acceleration = PVector.random2D();
 		velocity = new PVector(x, y);
@@ -52,7 +52,7 @@ class Mover  {
 		int addColor = floor(random(-c, c));
 		fill(_color + addColor);
 		// float radius = acceleration.x * 2 + 16;
-		float radius = pow(acceleration.x, 1.4)  + _baseRadius;
+		float radius = pow(abs(acceleration.x), 1.4)  + _baseRadius;
 		ellipse(location.x, location.y, radius, radius);
 	}
 
