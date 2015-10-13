@@ -67,12 +67,12 @@ public void controlEvent(ControlEvent theEvent) {
     }
   }
   
-  println(
-  "## controlEvent / id:"+theEvent.controller().id()+
-    " / name:"+theEvent.controller().name()+
-    " / label:"+theEvent.controller().label()+
-    " / value:"+theEvent.controller().value()
-    );
+  // println(
+  // "## controlEvent / id:"+theEvent.controller().id()+
+  //   " / name:"+theEvent.controller().name()+
+  //   " / label:"+theEvent.controller().label()+
+  //   " / value:"+theEvent.controller().value()
+  //   );
 }
 
 

@@ -1,7 +1,5 @@
 import controlP5.*;
 
-int WIDTH  = 640;
-int HEIGHT = 640;
 
 ParticleSystem ps;
 PVector lastMouse = new PVector();
@@ -10,7 +8,7 @@ ControlP5 cp5;
 
 void setup () {
 	//普通のcanvasだと3840で死ぬ
-	size(WIDTH, HEIGHT, P2D);
+	size(640, 640, P2D);
 	smooth();
 	frameRate(30);
 	background(0x999999);

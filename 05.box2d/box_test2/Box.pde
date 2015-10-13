@@ -8,12 +8,13 @@ class Box  {
 	Body body;
 	float x, y;
 	float w, h;
+	// static final color BLACK = color(0, 0, 0);
 
-	public Box (float x_, float y_) {
+	public Box (float x_, float y_, float w_, float h_) {
 		x = x_;
 		y = y_;
-		w = 16;
-		h = 16;
+		w = w_;
+		h = h_;
 
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.DYNAMIC;
@@ -36,11 +37,37 @@ class Box  {
 	}
 
 	void display () {
-		fill(175);
-		stroke(255);
-
 		Vec2 pos = box2d.getBodyPixelCoord(body);
 		float a = body.getAngle();
+
+		color c;
+		// if (pos.x < 0 || pos.y < 0) {
+		if (pos.x < 0 || pos.x > width || pos.y < 0 || pos.y > height) {
+			c = color(255);
+		}
+		else {
+			int cIndex = int(pos.y) * width + int(pos.x);
+
+
+			if (cIndex >= pixels.length) {
+				c = color(255);
+			}
+			else {
+				c = pixels[cIndex];
+				// int r = c >> 16 & 0xFF;  // Faster way of getting red(argb)
+				// int g = c >> 8 & 0xFF;   // Faster way of getting green(argb)
+				// int b = c & 0xFF;
+				// int xx = int(pos.x);
+				// int yy = int(pos.y);
+				// println("--" + r  + ", " + g  + ", " + b + ", " + xx + ", " + yy);
+			}
+			
+		}
+		fill(c);
+		// stroke(255, 127);
+		stroke(0, 127);
+		// fill(175);
+		// stroke(255);
 
 		pushMatrix();
 		translate(pos.x, pos.y);
@@ -55,7 +82,14 @@ class Box  {
 	}
 
 	boolean done() {
-    /~se;
+	// Let's find the screen position of the particle
+	Vec2 pos = box2d.getBodyPixelCoord(body);
+	// Is it off the bottom of the screen?
+	if (pos.y > height+w*h) {
+	  killBody();
+	  return true;
+	}
+	return false;
   }
 
 }

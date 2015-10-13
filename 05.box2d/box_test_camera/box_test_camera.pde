@@ -6,8 +6,6 @@ import org.jbox2d.dynamics.*;
 import processing.video.*;
 Capture camera; 
 
-int WIDTH  = 480;
-int HEIGHT = 320;
 
 
 ArrayList<Box> boxes;
@@ -19,7 +17,7 @@ PImage img;
 int[] pixelsCopy;
 
 void setup () {
-	size(WIDTH, HEIGHT, P2D);
+	size(480, 320, FX2D);
 	smooth();
 	frameRate(30);
 

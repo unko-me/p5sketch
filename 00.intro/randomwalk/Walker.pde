@@ -17,10 +17,23 @@ public class Walker {
 	}
 
 	void step() {
-		x += (float)generator.nextGaussian() * 1.5;
-		y += (float)generator.nextGaussian() * 1.5;
+		x += (float)generator.nextGaussian() * 16.5;
+		y += (float)generator.nextGaussian() * 16.5;
 		// x += int(random(3)) - 1;
 		// y += int(random(3)) - 1;
+		checkEdge();
+	}
+
+	void checkEdge() {
+		if (x > width) 
+			x = width;
+		else if (x < 0)
+			x = 0;
+
+		if (y > height)
+			y = height;
+		else if (y < 0)
+			y = 0;
 	}
 
 }

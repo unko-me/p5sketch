@@ -20,19 +20,36 @@ public class Walker {
 	void step() {
 		noiseStep();
 		// gaussianStep();
+
+		checkEdge();
 	}
 
 	void noiseStep() {
 		pos.x = map(noise(t.x), 0, 1, 0, width);
 		pos.y = map(noise(t.y), 0, 1, 0, height);
 
-		t.x += 0.01;
-		t.y += 0.01;
+		t.x += 0.02;
+		t.y += 0.02;
+
+
 	}
 
 	void gaussianStep() {
 		pos.x += (float)generator.nextGaussian() * 1.5;
 		pos.y += (float)generator.nextGaussian() * 1.5;
 	}
+
+	void checkEdge() {
+		if (pos.x > width) 
+			pos.x = width;
+		else if (pos.x < 0)
+			pos.x = 0;
+
+		if (pos.y > height)
+			pos.y = height;
+		else if (pos.y < 0)
+			pos.y = 0;
+	}
+
 
 }

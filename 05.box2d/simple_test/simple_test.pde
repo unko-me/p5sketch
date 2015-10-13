@@ -10,7 +10,7 @@ int HEIGHT = 640;
 Box2DProcessing box2d;
 
 void setup () {
-	size(WIDTH, HEIGHT);
+	size(640, 640);
 	smooth();
 	frameRate(30);
 	background(0x999999);
@@ -21,7 +21,6 @@ void setup () {
 }
 void draw() {
 	stroke(255);
-	rect(0, 0, 100, 100);
 }
 
 private void setupWorld() {

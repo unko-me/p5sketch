@@ -2,7 +2,7 @@ Mover[] movers = new Mover[30];
 
 PVector mouse = new PVector(width / 2, height / 2);
 void setup() {
-	size(1280, 720);
+	size(1280, 720, P2D);
 	background(0);
 	for (int i = 0; i < movers.length; ++i) {
 		movers[i] = new Mover(random(width), random(height));
