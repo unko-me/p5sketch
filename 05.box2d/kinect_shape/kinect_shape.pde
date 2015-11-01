@@ -25,7 +25,10 @@ PImage im, th;
 ArrayList<Contour> contours;
 PImage img;
 Contour largest;
+ArrayList<Surface> surfacies;
 ArrayList<PVector> largestPoints;
+ArrayList<ArrayList<PVector>> contoursPointList;
+
 int index = 0;
 
 boolean colorDepth = false;
@@ -80,10 +83,17 @@ void draw() {
 }
 
 void updateBox2d() {
-  if (surface != null) {
-    surface.killBody();
+  if (surfacies != null) {
+    for (Surface surface : surfacies) {
+      surface.killBody();  
+    }
   }
-  surface = new Surface(largestPoints);
+
+  surfacies = new ArrayList<Surface>();
+  for (ArrayList<PVector> points : contoursPointList) {
+      Surface surface = new Surface(points);
+      surfacies.add(surface);
+  } 
 
   // If the mouse is pressed, we make new particles
   if (mousePressed) {
@@ -97,7 +107,10 @@ void updateBox2d() {
   // background(255);
 
   // Draw the surface
-  surface.display();
+  
+  for (Surface surface : surfacies) {
+      surface.display();
+    }
 
   // Draw all particles
   for (Particle p: particles) {
@@ -125,28 +138,19 @@ void _findContours() {
   image(th, 0, 0);
   
   contours = cv.findContours(false, false); 
-  println("contours.size(): "+contours.size());
 }
 
 void _findLargest() {
-  largest = null;
+contoursPointList = new ArrayList<ArrayList<PVector>>();
+
  for (Contour contour : contours) {
-    
     //ちっさいのは除外する
     if (contour.area() < 100) {
      continue;
     }
-    if (largest == null) {
-      largest = contour;
-      continue;
-    }
-    if (largest.numPoints() < contour.numPoints()) {
-      largest = contour; 
-    }
+    contoursPointList.add(contour.getPoints());
   }
-  println("largest: " + largest.area());
-  
-  largestPoints = largest.getPoints();
+  // largestPoints = largest.getPoints();
 }
 
 void updateCV() {

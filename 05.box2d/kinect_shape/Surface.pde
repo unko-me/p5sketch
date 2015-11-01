@@ -50,7 +50,8 @@ class Surface {
   void display() {
     strokeWeight(2);
     stroke(200, 0, 0);
-    noFill();
+    // noFill();
+    fill(200, 0, 0);
     beginShape();
     for (Vec2 v: surface) {
       vertex(v.x,v.y);
