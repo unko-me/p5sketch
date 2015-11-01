@@ -51,7 +51,7 @@ void draw() {
 
 	// color c = pixels[mouseY * width + mouseX];
 	// int a = c >> 24 & 0xFF;
-	// int r = c >> 16 & 0xFF;  // Faster way of getting red(argb)
+// int r = c >> 16 & 0xFF;  // Faster way of getting red(argb)
 	// int g = c >> 8 & 0xFF;   // Faster way of getting green(argb)
 	// int b = c & 0xFF;  
 	// println("  " + r  + ", " + g  + ", " + b + ", " + mouseX + ", " + mouseY);

@@ -13,6 +13,11 @@ import org.jbox2d.dynamics.*;
 
 import processing.video.*;
 import gab.opencv.*;
+import org.openkinect.freenect.*;
+import org.openkinect.processing.*;
+
+
+Kinect kinect;
 
 Capture video;
 OpenCV cv;
@@ -22,6 +27,8 @@ PImage img;
 Contour largest;
 ArrayList<PVector> largestPoints;
 int index = 0;
+
+boolean colorDepth = false;
 
 // A reference to our box2d world
 Box2DProcessing box2d;
@@ -36,25 +43,48 @@ Surface surface;
 
 void setup() {
   size(640, 480);
-  // Initialize box2d physics and create the world
+
+  _initKinect();
+  _initBox2d();
+  frameRate(30);
+  
+}
+
+void _initKinect() {
+  kinect = new Kinect(this);
+  kinect.initDepth();
+  kinect.initVideo();
+  //kinect.enableIR(ir);
+  kinect.enableColorDepth(colorDepth);
+}
+
+void _initBox2d() {
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
-  // We are setting a custom gravity
-  box2d.setGravity(0, -10);
+  box2d.setGravity(0, -300);
 
-  // Create the empty list
   particles = new ArrayList<Particle>();
 
-  img = loadImage("depth.png");
+  // img = loadImage("depth.png");
+  img = kinect.getDepthImage();
   cv = new OpenCV(this,img);
   
   _findContours();
   _findLargest();
-  // Create the surface
-  surface = new Surface(largestPoints);
 }
 
 void draw() {
+  // background(255);
+  updateCV();
+  updateBox2d();
+}
+
+void updateBox2d() {
+  if (surface != null) {
+    surface.killBody();
+  }
+  surface = new Surface(largestPoints);
+
   // If the mouse is pressed, we make new particles
   if (mousePressed) {
     float sz = random(2,6);
@@ -64,7 +94,7 @@ void draw() {
   // We must always step through time!
   box2d.step();
 
-  background(255);
+  // background(255);
 
   // Draw the surface
   surface.display();
@@ -82,28 +112,24 @@ void draw() {
       particles.remove(i);
     }
   }
-
-  // _draw();
 }
 
 void _findContours() {
- cv.loadImage(img);
-  
+  cv.loadImage(img);
   cv.gray();
   cv.blur(8);
   int blurSize = 4;
-  //org.opencv.imgproc.Imgproc.medianBlur(cv.matGray, cv.matGray, new Size(blurSize, blurSize));
-  //cv.erode();
 
   cv.threshold(163);
   th = cv.getOutput();
   image(th, 0, 0);
   
   contours = cv.findContours(false, false); 
+  println("contours.size(): "+contours.size());
 }
 
 void _findLargest() {
- 
+  largest = null;
  for (Contour contour : contours) {
     
     //ちっさいのは除外する
@@ -123,22 +149,13 @@ void _findLargest() {
   largestPoints = largest.getPoints();
 }
 
-void _draw() {
+void updateCV() {
+  img = kinect.getDepthImage();
+  if (cv == null) cv = new OpenCV(this,img);
   
-  noFill();
-  strokeWeight(1);
+  _findContours();
+  _findLargest();
 
-  stroke(random(128),random(128),128);
-  //largest.draw();
-  
-  PVector point = largestPoints.get(index);
-  ellipse(point.x, point.y, 24, 24);
-  
-  index++;
-  if (index >= largest.numPoints()) {
-    index = 0;
-  }
-  
   
 }
 

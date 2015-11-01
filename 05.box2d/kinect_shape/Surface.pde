@@ -8,6 +8,7 @@ class Surface {
   // We'll keep track of all of the surface points
   ArrayList<Vec2> surface;
   ArrayList<PVector> contoursPoints;
+  Body body;
 
   Surface(ArrayList<PVector> contoursPoints) {
     this.contoursPoints = contoursPoints;
@@ -38,7 +39,7 @@ class Surface {
     // The edge chain is now attached to a body via a fixture
     BodyDef bd = new BodyDef();
     bd.position.set(0.0f,0.0f);
-    Body body = box2d.createBody(bd);
+    body = box2d.createBody(bd);
     // Shortcut, we could define a fixture if we
     // want to specify frictions, restitution, etc.
     body.createFixture(chain,1);
@@ -48,13 +49,17 @@ class Surface {
   // A simple function to just draw the edge chain as a series of vertex points
   void display() {
     strokeWeight(2);
-    stroke(0);
+    stroke(200, 0, 0);
     noFill();
     beginShape();
     for (Vec2 v: surface) {
       vertex(v.x,v.y);
     }
     endShape();
+  }
+
+  void killBody() {
+    box2d.destroyBody(body);
   }
 
 }
