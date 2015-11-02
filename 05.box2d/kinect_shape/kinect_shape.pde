@@ -32,6 +32,7 @@ ArrayList<ArrayList<PVector>> contoursPointList;
 int index = 0;
 
 boolean colorDepth = false;
+boolean isFill = false;
 
 // A reference to our box2d world
 Box2DProcessing box2d;
@@ -45,6 +46,7 @@ ArrayList<Particle> particles;
 Surface surface;
 
 void setup() {
+  // fullScreen();
   size(640, 480);
 
   _initKinect();
@@ -55,6 +57,7 @@ void setup() {
 
 void _initKinect() {
   kinect = new Kinect(this);
+  kinect.enableMirror(true);
   kinect.initDepth();
   kinect.initVideo();
   //kinect.enableIR(ir);
@@ -97,7 +100,7 @@ void updateBox2d() {
 
   // If the mouse is pressed, we make new particles
   if (mousePressed) {
-    float sz = random(2,6);
+    float sz = random(6,12);
     particles.add(new Particle(mouseX,mouseY,sz));
   }
 
@@ -109,7 +112,7 @@ void updateBox2d() {
   // Draw the surface
   
   for (Surface surface : surfacies) {
-      surface.display();
+      surface.display(isFill);
     }
 
   // Draw all particles
@@ -135,7 +138,8 @@ void _findContours() {
 
   cv.threshold(163);
   th = cv.getOutput();
-  image(th, 0, 0);
+  // image(th, 0, 0);
+  image(kinect.getVideoImage(), 0, 0);
   
   contours = cv.findContours(false, false); 
 }
@@ -161,6 +165,12 @@ void updateCV() {
   _findLargest();
 
   
+}
+
+void keyPressed() {
+  if (key == 'n') {
+    isFill = !isFill;
+  }
 }
 
 

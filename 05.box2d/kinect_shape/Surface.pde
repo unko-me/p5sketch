@@ -47,11 +47,18 @@ class Surface {
   }
 
   // A simple function to just draw the edge chain as a series of vertex points
-  void display() {
-    strokeWeight(2);
-    stroke(200, 0, 0);
+  void display(Boolean isFill) {
+    
     // noFill();
-    fill(200, 0, 0);
+    if (isFill) {
+      strokeWeight(2);
+      stroke(200, 0, 0);
+      fill(200, 0, 0);
+    }
+    else {
+noStroke();
+      noFill();
+    }
     beginShape();
     for (Vec2 v: surface) {
       vertex(v.x,v.y);
