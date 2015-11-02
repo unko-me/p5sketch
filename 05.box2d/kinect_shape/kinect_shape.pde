@@ -13,11 +13,9 @@ import org.jbox2d.dynamics.*;
 
 import processing.video.*;
 import gab.opencv.*;
-import org.openkinect.freenect.*;
-import org.openkinect.processing.*;
 
 
-Kinect kinect;
+KinectManager kinectManager;
 
 Capture video;
 OpenCV cv;
@@ -47,7 +45,7 @@ Surface surface;
 
 void setup() {
   // fullScreen();
-  size(640, 480);
+  size(640, 480, P2D);
 
   _initKinect();
   _initBox2d();
@@ -56,12 +54,7 @@ void setup() {
 }
 
 void _initKinect() {
-  kinect = new Kinect(this);
-  kinect.enableMirror(true);
-  kinect.initDepth();
-  kinect.initVideo();
-  //kinect.enableIR(ir);
-  kinect.enableColorDepth(colorDepth);
+  kinectManager = new KinectManager(this);
 }
 
 void _initBox2d() {
@@ -72,16 +65,17 @@ void _initBox2d() {
   particles = new ArrayList<Particle>();
 
   // img = loadImage("depth.png");
-  img = kinect.getDepthImage();
+  img = kinectManager.kinect.getDepthImage();
   cv = new OpenCV(this,img);
   
   _findContours();
-  _findLargest();
+  _filterContours();
 }
 
 void draw() {
   // background(255);
   updateCV();
+  image(kinectManager.kinect.getVideoImage(), 0, 0);
   updateBox2d();
 }
 
@@ -106,11 +100,7 @@ void updateBox2d() {
 
   // We must always step through time!
   box2d.step();
-
-  // background(255);
-
   // Draw the surface
-  
   for (Surface surface : surfacies) {
       surface.display(isFill);
     }
@@ -138,15 +128,12 @@ void _findContours() {
 
   cv.threshold(163);
   th = cv.getOutput();
-  // image(th, 0, 0);
-  image(kinect.getVideoImage(), 0, 0);
   
   contours = cv.findContours(false, false); 
 }
 
-void _findLargest() {
+void _filterContours() {
 contoursPointList = new ArrayList<ArrayList<PVector>>();
-
  for (Contour contour : contours) {
     //ちっさいのは除外する
     if (contour.area() < 100) {
@@ -154,17 +141,14 @@ contoursPointList = new ArrayList<ArrayList<PVector>>();
     }
     contoursPointList.add(contour.getPoints());
   }
-  // largestPoints = largest.getPoints();
 }
 
 void updateCV() {
-  img = kinect.getDepthImage();
+  img = kinectManager.kinect.getDepthImage();
   if (cv == null) cv = new OpenCV(this,img);
   
   _findContours();
-  _findLargest();
-
-  
+  _filterContours();
 }
 
 void keyPressed() {
