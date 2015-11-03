@@ -12,9 +12,19 @@ class PolygonBlob extends Polygon2D {
     int selectedPoint = 0;
 
     // create contours from blobs
-    for (int n=0 ; n<theBlobDetection.getBlobNb(); n++) { Blob b = theBlobDetection.getBlob(n); if (b != null && b.getEdgeNb() > 100) {
+    for (int n=0 ; n<theBlobDetection.getBlobNb(); n++) { 
+      Blob b = theBlobDetection.getBlob(n);
+      if (b != null && b.getEdgeNb() > 100) {
         ArrayList contour = new ArrayList();
-        for (int m=0; m<b.getEdgeNb(); m++) { EdgeVertex eA = b.getEdgeVertexA(m); EdgeVertex eB = b.getEdgeVertexB(m); if (eA != null && eB != null) { EdgeVertex fn = b.getEdgeVertexA((m+1) % b.getEdgeNb()); EdgeVertex fp = b.getEdgeVertexA((max(0, m-1))); float dn = dist(eA.x*kinectWidth, eA.y*kinectHeight, fn.x*kinectWidth, fn.y*kinectHeight); float dp = dist(eA.x*kinectWidth, eA.y*kinectHeight, fp.x*kinectWidth, fp.y*kinectHeight); if (dn > 15 || dp > 15) {
+        for (int m=0; m<b.getEdgeNb(); m++) {
+          EdgeVertex eA = b.getEdgeVertexA(m); 
+          EdgeVertex eB = b.getEdgeVertexB(m); 
+          if (eA != null && eB != null) {
+            EdgeVertex fn = b.getEdgeVertexA((m+1) % b.getEdgeNb()); 
+            EdgeVertex fp = b.getEdgeVertexA((max(0, m-1))); 
+            float dn = dist(eA.x*kinectWidth, eA.y*kinectHeight, fn.x*kinectWidth, fn.y*kinectHeight); 
+            float dp = dist(eA.x*kinectWidth, eA.y*kinectHeight, fp.x*kinectWidth, fp.y*kinectHeight); 
+            if (dn > 15 || dp > 15) {
               if (contour.size() > 0) {
                 contour.add(new PVector(eB.x*kinectWidth, eB.y*kinectHeight));
                 contours.add(contour);
@@ -29,9 +39,9 @@ class PolygonBlob extends Polygon2D {
         }
       }
     }
-    
+
     while (contours.size() > 0) {
-      
+
       // find next contour
       float distance = 999999999;
       if (getNumPoints() > 0) {
@@ -58,7 +68,12 @@ class PolygonBlob extends Polygon2D {
           ArrayList c = contours.get(i);
           PVector fp = c.get(0);
           PVector lp = c.get(c.size()-1);
-          if (fp.y > kinectHeight-5 && fp.x < closestPoint.x) { closestPoint = fp; selectedContour = i; selectedPoint = 0; } if (lp.y > kinectHeight-5 && lp.x < closestPoint.y) { 
+          if (fp.y > kinectHeight-5 && fp.x < closestPoint.x) {
+            closestPoint = fp;
+            selectedContour = i;
+            selectedPoint = 0; 
+          } 
+          if (lp.y > kinectHeight-5 && lp.x < closestPoint.y) { 
             closestPoint = lp; 
             selectedContour = i; 
             selectedPoint = 1;
@@ -68,7 +83,9 @@ class PolygonBlob extends Polygon2D {
 
       // add contour to polygon
       ArrayList contour = contours.get(selectedContour);
-      if (selectedPoint > 0) { Collections.reverse(contour); }
+      if (selectedPoint > 0) { 
+        Collections.reverse(contour); 
+      }
       for (PVector p : contour) {
         add(new Vec2D(p.x, p.y));
       }
