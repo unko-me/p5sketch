@@ -9,15 +9,20 @@ PVector lastMouse = new PVector();
 float force1 = 0.0;
 ControlP5 cp5;
 
+PImage particleImg;
+
 void setup () {
 	//普通のcanvasだと3840で死ぬ
-	size(WIDTH, HEIGHT, P2D);
+	size(300, 300, P2D);
+	surface.setSize(WIDTH, HEIGHT);
 	smooth();
 	frameRate(30);
 	background(0x999999);
 
+	particleImg = loadImage("../../img/1yen.png");
+
 	// p = new Particle(new PVector(width / 2, 10));
-	ps = new ParticleSystem(new PVector(width / 2, 10), draw_max);
+	ps = new ParticleSystem(new PVector(width / 2, 10), draw_max, particleImg);
 
 	cp5 = new ControlP5(this);
 	cp5.addSlider("force1")

@@ -17,19 +17,18 @@ import gab.opencv.*;
 
 KinectManager kinectManager;
 
-Capture video;
+// Capture video;
 OpenCV cv;
-PImage im, th;
+// PImage im, th;
 ArrayList<Contour> contours;
 PImage img;
-Contour largest;
+// Contour largest;
 ArrayList<Surface> surfacies;
 ArrayList<PVector> largestPoints;
 ArrayList<ArrayList<PVector>> contoursPointList;
 
 int index = 0;
 
-boolean colorDepth = false;
 boolean isFill = false;
 
 // A reference to our box2d world
@@ -127,7 +126,7 @@ void _findContours() {
   int blurSize = 4;
 
   cv.threshold(163);
-  th = cv.getOutput();
+  // th = cv.getOutput();
   
   contours = cv.findContours(false, false); 
 }

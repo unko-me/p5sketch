@@ -4,16 +4,17 @@ class Particle {
 	PVector acceleration;
 	float lifespan;
 	float mass = 1;
-
 	PImage img;
 
-	public Particle (PVector l) {
+	
+
+	public Particle (PVector l, PImage img_) {
 		location = l.get();
 		acceleration = new PVector(0, 0);
 		velocity = new PVector(random(-2, 2), random(-2, 0));
 		lifespan = 255.0;
-
-		img = loadImage("../../img/1yen.png");
+		img = img_;
+		
 	}
 
 	void update() {
