@@ -1,0 +1,21 @@
+[
+	{
+		"name": "like",
+		"images" : [
+			{ 
+				"src": "../../img/facebook_like_512.png",
+				"scale": 80
+			}
+		]
+	},
+	{
+		"name": "money",
+		"images" : [
+			{ 
+				"src": "../../img/1yen.png",
+				"scale": 80
+			}
+		]
+	}
+
+]
