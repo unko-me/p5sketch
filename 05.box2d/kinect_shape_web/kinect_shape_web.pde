@@ -6,10 +6,12 @@ import SimpleOpenNI.*; // kinect
 import blobDetection.*; // blobs
 import toxi.geom.*; // toxiclibs shapes and vectors
 import toxi.processing.*; // toxiclibs display
-import pbox2d.*; // shiffman's jbox2d helper library
+// import pbox2d.*; // shiffman's jbox2d helper library
+import shiffman.box2d.*;
 import org.jbox2d.collision.shapes.*; // jbox2d
 import org.jbox2d.common.*; // jbox2d
 import org.jbox2d.dynamics.*; // jbox2d
+import java.util.*;
 
 // declare SimpleOpenNI object
 SimpleOpenNI context;
@@ -24,7 +26,7 @@ PolygonBlob poly;
 PImage cam, blobs;
 // the kinect's dimensions to be used later on for calculations
 int kinectWidth = 640;
-int kinectHeight = 480;
+int kinectHeight = 480;   
 // to center and rescale from 640x480 to higher custom resolutions
 float reScale;
 
@@ -39,7 +41,7 @@ String[] palettes = {
 color[] colorPalette;
 
 // the main PBox2D object in which all the physics-based stuff is happening
-PBox2D box2d;
+Box2DProcessing box2d;
 // list to hold all the custom shapes (circles, polygons)
 ArrayList polygons = new ArrayList();
 
@@ -69,7 +71,7 @@ void setup() {
     // initialize ToxiclibsSupport object
     gfx = new ToxiclibsSupport(this);
     // setup box2d, create world, set gravity
-    box2d = new PBox2D(this);
+    box2d = new Box2DProcessing(this);
     box2d.createWorld();
     box2d.setGravity(0, -20);
     // set random colors (background, blob)

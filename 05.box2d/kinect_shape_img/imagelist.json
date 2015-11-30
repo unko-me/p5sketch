@@ -16,6 +16,23 @@
 				"scale": 80
 			}
 		]
+	},
+	{
+		"name": "anpan",
+		"images" : [
+			{ 
+				"src": "../../localdata/img/anpan/img/anpan.png",
+				"scale": 80
+			},
+			{ 
+				"src": "../../localdata/img/anpan/img/baikin.png",
+				"scale": 80
+			},
+			{ 
+				"src": "../../localdata/img/anpan/img/kare-.png",
+				"scale": 80
+			}
+		]
 	}
 
 ]

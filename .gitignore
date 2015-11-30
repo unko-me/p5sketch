@@ -14,3 +14,5 @@ build-tmp/
 
 /*.sublime-project
 /*.sublime-workspace
+
+/localdata

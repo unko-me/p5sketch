@@ -18,13 +18,11 @@ class Surface {
     ChainShape chain = new ChainShape();
 
     float theta = 0;
-    float ratio = width / 640;
-
     
     // This has to go backwards so that the objects  bounce off the top of the surface
     // This "edgechain" will only work in one direction!
     for (PVector point : contoursPoints) {
-      surface.add(new Vec2(point.x * ratio, point.y * ratio));
+      surface.add(new Vec2(point.x, point.y));
     }
 
     // Build an array of vertices in Box2D coordinates
@@ -58,7 +56,7 @@ class Surface {
       fill(200, 0, 0);
     }
     else {
-      noStroke();
+noStroke();
       noFill();
     }
     beginShape();

@@ -17,34 +17,35 @@ import gab.opencv.*;
 
 KinectManager kinectManager;
 
+// Capture video;
 OpenCV cv;
+// PImage im, th;
 ArrayList<Contour> contours;
 PImage img;
 // Contour largest;
 ArrayList<Surface> surfacies;
-ArrayList<PVector> largestPoints;
 ArrayList<ArrayList<PVector>> contoursPointList;
 
 int index = 0;
 
 boolean isFill = false;
 
-ImageService imgService;
-
+// A reference to our box2d world
 Box2DProcessing box2d;
-
 ArrayList<Particle> particles;
 Surface surface;
 
+LineAnim lineAnim;
+
 void setup() {
   // fullScreen();
-  // size(640, 480, P2D);
-  size(1280, 960, P2D);
-  imgService = new ImageService(loadJSONArray("./imagelist.json"));
+  size(640, 480, P2D);
 
   _initKinect();
   _initBox2d();
   frameRate(30);
+  lineAnim = new LineAnim(2240, 300, 20);
+  
 }
 
 void _initKinect() {
@@ -69,8 +70,10 @@ void _initBox2d() {
 void draw() {
   // background(255);
   updateCV();
-  image(kinectManager.kinect.getVideoImage(), 0, 0, width, height);
+  image(kinectManager.kinect.getVideoImage(), 0, 0);
   updateBox2d();
+
+  lineAnim.update(contoursPointList.get(0));
 }
 
 void updateBox2d() {
@@ -88,10 +91,8 @@ void updateBox2d() {
 
   // If the mouse is pressed, we make new particles
   if (mousePressed) {
-    float sz = random(15,30);
-    ImageSet imgSet = imgService.getRandomImgSet();
-    particles.add(new Particle(mouseX,mouseY,sz, imgSet.img));
-    // particles.add(new Particle(mouseX,mouseY,sz, particleImg));
+    float sz = random(6,12);
+    particles.add(new Particle(mouseX,mouseY,sz));
   }
 
   // We must always step through time!
@@ -123,32 +124,19 @@ void _findContours() {
   int blurSize = 4;
 
   cv.threshold(163);
+  // th = cv.getOutput();
+  
   contours = cv.findContours(false, false); 
 }
 
 void _filterContours() {
 contoursPointList = new ArrayList<ArrayList<PVector>>();
-
-  int maxY = height - 10;
  for (Contour contour : contours) {
     //ちっさいのは除外する
     if (contour.area() < 100) {
      continue;
     }
-    ArrayList<PVector> points = contour.getPoints();
-    contoursPointList.add(points);
-    //底辺にpointがあるときはさらに下のほうにもってく。じゃないと、底辺にたまってしまう
-    // for (PVector point : points) {
-    //   if (point.y > maxY) point.y = height + 10;
-    // }
-    //そのまま使うと多すぎるので消す
-    ArrayList<PVector> tmp = new ArrayList<PVector>();
-    // → Vertices of chain shape are too close togetherというエラーがでる…。近くねーだろ。
-    // ArrayList<PVector> points = contour.getPoints();
-    // for (int i = 0, n = points.size(); i < n; i+=2) {
-    //   tmp.add(points.get(i));
-    // }
-    // if (tmp.size() > 100) contoursPointList.add(tmp);
+    contoursPointList.add(contour.getPoints());
   }
 }
 

@@ -8,7 +8,6 @@ import shiffman.box2d.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
-import org.jbox2d.dynamics.*;
 
 
 import processing.video.*;
@@ -30,16 +29,10 @@ ArrayList<ArrayList<PVector>> contoursPointList;
 int index = 0;
 
 boolean isFill = false;
-
-// A reference to our box2d world
 Box2DProcessing box2d;
 
 
-
-// An ArrayList of particles that will fall on the surface
 ArrayList<Particle> particles;
-
-// An object to store information about the uneven surface
 Surface surface;
 
 void setup() {

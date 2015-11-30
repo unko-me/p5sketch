@@ -11,7 +11,7 @@ class ImageService {
 			JSONObject obj = json.getJSONObject(i);
 			createSetList(obj);
 		}
-		currentList = imageLists.get(0);
+		currentList = imageLists.get(2);
 	}
 
 	void createSetList(JSONObject obj) {
