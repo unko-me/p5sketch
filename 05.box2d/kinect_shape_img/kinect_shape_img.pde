@@ -87,10 +87,11 @@ void updateBox2d() {
   } 
 
   // If the mouse is pressed, we make new particles
-  if (mousePressed) {
+  // if (mousePressed) {
+  if (true) {
     float sz = random(15,30);
     ImageSet imgSet = imgService.getRandomImgSet();
-    particles.add(new Particle(mouseX,mouseY,sz, imgSet.img));
+    particles.add(new Particle(mouseX,mouseY, sz, imgSet.img));
     // particles.add(new Particle(mouseX,mouseY,sz, particleImg));
   }
 
@@ -122,7 +123,7 @@ void _findContours() {
   cv.blur(8);
   int blurSize = 4;
 
-  cv.threshold(163);
+  cv.threshold(40);
   contours = cv.findContours(false, false); 
 }
 

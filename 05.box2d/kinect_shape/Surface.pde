@@ -38,6 +38,7 @@ class Surface {
 
     // The edge chain is now attached to a body via a fixture
     BodyDef bd = new BodyDef();
+    bd.type = BodyType.STATIC;
     bd.position.set(0.0f,0.0f);
     body = box2d.createBody(bd);
     // Shortcut, we could define a fixture if we

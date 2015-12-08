@@ -21,15 +21,15 @@
 		"name": "anpan",
 		"images" : [
 			{ 
-				"src": "../../localdata/img/anpan/img/anpan.png",
+				"src": "../../localdata/img/anpan/anpanman-assets/anpan.png",
 				"scale": 80
 			},
 			{ 
-				"src": "../../localdata/img/anpan/img/baikin.png",
+				"src": "../../localdata/img/anpan/anpanman-assets/baikin.png",
 				"scale": 80
 			},
 			{ 
-				"src": "../../localdata/img/anpan/img/kare-.png",
+				"src": "../../localdata/img/anpan/anpanman-assets/karee.png",
 				"scale": 80
 			}
 		]

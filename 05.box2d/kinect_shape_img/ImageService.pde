@@ -26,7 +26,7 @@ class ImageService {
 	}
 
 	ImageSet getRandomImgSet() {
-		return currentList.get(0);
+		return currentList.get(floor(random(currentList.size())));
 	}
 
 }

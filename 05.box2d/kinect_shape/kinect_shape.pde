@@ -69,6 +69,7 @@ void draw() {
   updateCV();
   image(kinectManager.kinect.getVideoImage(), 0, 0);
   updateBox2d();
+  text("" + frameRate, 10, height - 10);
 }
 
 void updateBox2d() {
